@@ -4,6 +4,7 @@ import com.ugurcangursen.ticketingapp.dao.TicketDAO;
 import com.ugurcangursen.ticketingapp.entity.Ticket;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ public class TicketDAOImpl implements TicketDAO {
 
     private EntityManager entityManager;
 
+    @Autowired
     public TicketDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

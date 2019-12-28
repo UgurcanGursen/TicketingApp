@@ -4,6 +4,7 @@ import com.ugurcangursen.ticketingapp.dao.AirportDAO;
 import com.ugurcangursen.ticketingapp.entity.Airport;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ public class AirportDAOImpl implements AirportDAO {
 
     private EntityManager entityManager;
 
+    @Autowired
     public AirportDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

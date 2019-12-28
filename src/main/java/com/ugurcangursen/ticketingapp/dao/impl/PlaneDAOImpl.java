@@ -4,6 +4,7 @@ import com.ugurcangursen.ticketingapp.dao.PlaneDAO;
 import com.ugurcangursen.ticketingapp.entity.Plane;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ public class PlaneDAOImpl implements PlaneDAO {
 
     private EntityManager entityManager;
 
+    @Autowired
     public PlaneDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
