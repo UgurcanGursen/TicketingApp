@@ -59,7 +59,13 @@ public class AirlineCompanyDAOImpl implements AirlineCompanyDAO {
 
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        AirlineCompany airlineCompany = currentSession.get(AirlineCompany.class,name);
+        // create a query
+        Query theQuery =
+                currentSession.createQuery("select a from AirlineCompany a where a.name =:name ", AirlineCompany.class);
+        theQuery.setParameter("name", name);
+
+        // execute query and get result list
+        AirlineCompany airlineCompany = (AirlineCompany) theQuery.list().get(0);
 
         return airlineCompany;
     }
