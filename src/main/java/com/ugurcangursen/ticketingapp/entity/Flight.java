@@ -1,5 +1,7 @@
 package com.ugurcangursen.ticketingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -38,11 +40,12 @@ public class Flight implements Serializable {
     private int fullSeatsPer;
 
     @JoinColumn(name = "flight_route_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Route route;
 
     @JoinColumn(name = "flight_airline_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private AirlineCompany airlineCompany;
 
 

@@ -35,7 +35,7 @@ public class TicketServiceImpl implements TicketService {
         if (ticket != null) {
             Ticket ticketDb = modelMapper.map(ticket, Ticket.class);
             Flight flight = flightDAO.findById(ticket.getFlightId());
-            ticket.setFlight(flight);
+            ticketDb.setFlight(flight);
             Ticket ticketDbSaved = ticketDAO.save(ticketDb);
             if (ticketDbSaved != null) {
                 return modelMapper.map(ticketDbSaved, TicketDto.class);
