@@ -12,7 +12,7 @@ public interface FlightService {
 
     FlightDto findById(long id);
 
-    FlightDto findByName(String name);
+    List<FlightDto> findByName(String name);
 
     void deleteById(long id);
 

@@ -80,14 +80,14 @@ public class TicketServiceImpl implements TicketService {
 
             if (ticketDb.isTicketSold()) {
                 // Get quota status of Flight
-                Flight flight = flightDAO.findById(ticketDb.getFlight().getId());
+                Flight flight = flightDAO.findById(ticket.getFlightId());
+                ticketDb.setFlight(flight);
                 int quota = flight.getNumberOfSeats();
                 int fullQuota = flight.getNumOfFullSeats();
 
                 if (fullQuota < quota) {
                     // Increase quota if it is not full yet
                     flight.setNumOfFullSeats(fullQuota + 1);
-
 
                     int newPer = (fullQuota / quota) * 100;
                     int currentPer = flight.getFullSeatsPer();

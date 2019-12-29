@@ -53,9 +53,9 @@ public class FlightRest {
     // add mapping for GET /rest/flights/name/{name}
     @GetMapping("/name/{name}")
     @ApiOperation(value = "Find By Name Operation", response = FlightDto.class)
-    public FlightDto findByName(@PathVariable String name) {
+    public List<FlightDto> findByName(@PathVariable String name) {
 
-        FlightDto flight = flightService.findByName(name);
+        List<FlightDto> flight = flightService.findByName(name);
 
         if (flight == null) {
             throw new RuntimeException("Flight is not found - " + name);

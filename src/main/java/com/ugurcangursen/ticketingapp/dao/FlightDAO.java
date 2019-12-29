@@ -13,7 +13,7 @@ public interface FlightDAO {
 
     Flight findById(long id);
 
-    Flight findByName(String name);
+    List<Flight> findByName(String name);
 
     void deleteById(long id);
 

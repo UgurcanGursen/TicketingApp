@@ -53,18 +53,18 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public Flight findByName(String name) {
+    public List<Flight> findByName(String name) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
         // create a query
-        Query theQuery =
+        Query<Flight> theQuery =
                 currentSession.createQuery("select a from Flight a where a.name =:name ", Flight.class);
         theQuery.setParameter("name", name);
 
         // execute query and get result list
-        Flight flight = (Flight) theQuery.list().get(0);
+        List<Flight> flights = theQuery.getResultList();
 
-        return flight;
+        return flights;
     }
 
     @Override

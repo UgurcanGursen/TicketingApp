@@ -65,9 +65,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     @Transactional
-    public FlightDto findByName(String name) {
-        Flight flightDb = flightDAO.findByName(name);
-        return modelMapper.map(flightDb, FlightDto.class);
+    public List<FlightDto> findByName(String name) {
+        List<Flight> flightDb = flightDAO.findByName(name);
+        return Arrays.asList(modelMapper.map(flightDb, FlightDto[].class));
     }
 
     @Override
