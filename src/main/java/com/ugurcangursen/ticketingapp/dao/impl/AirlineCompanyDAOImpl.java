@@ -21,11 +21,11 @@ public class AirlineCompanyDAOImpl implements AirlineCompanyDAO {
     }
 
     @Override
-    public void save(AirlineCompany airlineCompany) {
+    public AirlineCompany save(AirlineCompany airlineCompany) {
 
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
         currentSession.saveOrUpdate(airlineCompany); // save Airline Company
-
+        return airlineCompany;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.ugurcangursen.ticketingapp.rest;
 
 
-import com.ugurcangursen.ticketingapp.entity.Route;
+import com.ugurcangursen.ticketingapp.dto.RouteDto;
 import com.ugurcangursen.ticketingapp.service.RouteService;
 import com.ugurcangursen.ticketingapp.util.RestPaths;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +20,15 @@ public class RouteRest {
 
     // expose "/rest/routes" and return list of routes
     @GetMapping
-    public List<Route> findAll() {
+    public List<RouteDto> findAll() {
         return routeService.findAll();
     }
 
     // add mapping for GET /rest/routes/{id}
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
-    public Route findById(@PathVariable long id) {
+    public RouteDto findById(@PathVariable long id) {
 
-        Route route = routeService.findById(id);
+        RouteDto route = routeService.findById(id);
 
         if (route == null) {
             throw new RuntimeException("Route  id not found - " + id);
@@ -39,7 +39,7 @@ public class RouteRest {
 
     // add mapping for POST /rest/routes - add new route
     @PostMapping
-    public Route addRoute(@RequestBody Route route) {
+    public RouteDto addRoute(@RequestBody RouteDto route) {
 
 
         routeService.save(route);
@@ -49,9 +49,9 @@ public class RouteRest {
 
     // add mapping for GET /rest/routes/name/{name}
     @GetMapping("/name/{name}")
-    public Route findByName(@PathVariable String name) {
+    public RouteDto findByName(@PathVariable String name) {
 
-        Route route = routeService.findByName(name);
+        RouteDto route = routeService.findByName(name);
 
         if (route == null) {
             throw new RuntimeException("Route is not found - " + name);
@@ -64,7 +64,7 @@ public class RouteRest {
     @DeleteMapping("/{id}")
     public String deleteRoute(@PathVariable long id) {
 
-        Route route = routeService.findById(id);
+        RouteDto route = routeService.findById(id);
 
         // throw exception if null
 
@@ -79,7 +79,7 @@ public class RouteRest {
 
     // add mapping for PUT /rest/routes/id - update existing route
     @PutMapping("/{id}")
-    public Route routeUpdate(@PathVariable long id, @RequestBody Route route) {
+    public RouteDto routeUpdate(@PathVariable long id, @RequestBody RouteDto route) {
 
         routeService.update(id,route);
         return route;

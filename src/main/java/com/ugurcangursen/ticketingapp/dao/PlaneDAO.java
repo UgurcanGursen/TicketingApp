@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PlaneDAO {
 
-    void save(Plane plane);
+    Plane save(Plane plane);
     List<Plane> findAll();
     Plane findById(long id);
     Plane findByName(String name);

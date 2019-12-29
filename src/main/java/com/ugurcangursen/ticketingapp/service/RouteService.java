@@ -1,14 +1,14 @@
 package com.ugurcangursen.ticketingapp.service;
 
-import com.ugurcangursen.ticketingapp.entity.Route;
+import com.ugurcangursen.ticketingapp.dto.RouteDto;
 
 import java.util.List;
 
 public interface RouteService {
-    void save(Route route);
-    List<Route> findAll();
-    Route findById(long id);
-    Route findByName(String name);
+    RouteDto save(RouteDto route);
+    List<RouteDto> findAll();
+    RouteDto findById(long id);
+    RouteDto findByName(String name);
     void deleteById(long id);
-    Route update(long id, Route route);
+    RouteDto update(long id, RouteDto route);
 }

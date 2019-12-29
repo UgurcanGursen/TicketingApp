@@ -1,14 +1,14 @@
 package com.ugurcangursen.ticketingapp.service;
 
-import com.ugurcangursen.ticketingapp.entity.Ticket;
+import com.ugurcangursen.ticketingapp.dto.TicketDto;
 
 import java.util.List;
 
 public interface TicketService {
-    void save(Ticket ticket);
-    List<Ticket> findAll();
-    Ticket findById(long id);
-    Ticket findByCode(String ticketCode);
+    TicketDto save(TicketDto ticket);
+    List<TicketDto> findAll();
+    TicketDto findById(long id);
+    TicketDto findByCode(String ticketCode);
     void deleteById(long id);
-    Ticket update(long id, Ticket ticket);
+    TicketDto update(long id, TicketDto ticket);
 }

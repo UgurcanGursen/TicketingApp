@@ -1,46 +1,61 @@
 package com.ugurcangursen.ticketingapp.service.impl;
 
 import com.ugurcangursen.ticketingapp.dao.AirportDAO;
+import com.ugurcangursen.ticketingapp.dto.AirportDto;
 import com.ugurcangursen.ticketingapp.entity.Airport;
 import com.ugurcangursen.ticketingapp.service.AirportService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class AirportServiceImpl implements AirportService {
 
-    private AirportDAO airportDAO;
+    private final AirportDAO airportDAO;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public AirportServiceImpl(AirportDAO airportDAO) {
+    public AirportServiceImpl(AirportDAO airportDAO, ModelMapper modelMapper) {
         this.airportDAO = airportDAO;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     @Transactional
-    public void save(Airport airport) {
-        airportDAO.save(airport);
+    public AirportDto save(AirportDto airport) {
+        if (airport != null) {
+            Airport airportDb = modelMapper.map(airport, Airport.class);
+            Airport airportDbSaved = airportDAO.save(airportDb);
+            if (airportDbSaved != null) {
+                return modelMapper.map(airportDbSaved, AirportDto.class);
+            }
+        }
+        return airport;
     }
 
     @Override
     @Transactional
-    public List<Airport> findAll() {
-        return airportDAO.findAll();
+    public List<AirportDto> findAll() {
+        List<Airport> data = airportDAO.findAll();
+        return Arrays.asList(modelMapper.map(data, AirportDto.class));
     }
 
     @Override
     @Transactional
-    public Airport findById(long id) {
-        return airportDAO.findById(id);
+    public AirportDto findById(long id) {
+        Airport airportDb = airportDAO.findById(id);
+        return modelMapper.map(airportDb,AirportDto.class);
     }
 
     @Override
     @Transactional
-    public Airport findByName(String name) {
-        return airportDAO.findByName(name);
+    public AirportDto findByName(String name) {
+        Airport airportDb = airportDAO.findByName(name);
+        return modelMapper.map(airportDb,AirportDto.class);
     }
 
     @Override
@@ -51,7 +66,14 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     @Transactional
-    public Airport update(long id, Airport airport) {
-        return airportDAO.update(id,airport);
+    public AirportDto update(long id, AirportDto airport) {
+        if (airport != null) {
+            Airport airportDb = modelMapper.map(airport, Airport.class);
+            Airport airportDbSaved = airportDAO.update(id,airportDb);
+            if (airportDbSaved != null) {
+                return modelMapper.map(airportDbSaved, AirportDto.class);
+            }
+        }
+        return airport;
     }
 }

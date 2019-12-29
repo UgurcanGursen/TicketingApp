@@ -21,9 +21,10 @@ public class RouteDAOImpl implements RouteDAO {
     }
 
     @Override
-    public void save(Route route) {
+    public Route save(Route route) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
         currentSession.saveOrUpdate(route); // save route
+        return route;
     }
 
     @Override

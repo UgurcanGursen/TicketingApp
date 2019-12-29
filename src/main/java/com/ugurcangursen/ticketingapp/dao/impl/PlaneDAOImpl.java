@@ -21,10 +21,10 @@ public class PlaneDAOImpl implements PlaneDAO {
     }
 
     @Override
-    public void save(Plane plane) {
+    public Plane save(Plane plane) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
         currentSession.saveOrUpdate(plane); // save plane
-
+        return plane;
     }
 
     @Override

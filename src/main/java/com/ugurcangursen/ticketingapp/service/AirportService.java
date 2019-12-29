@@ -1,15 +1,16 @@
 package com.ugurcangursen.ticketingapp.service;
 
-import com.ugurcangursen.ticketingapp.entity.Airport;
+import com.ugurcangursen.ticketingapp.dto.AirportDto;
+
 
 import java.util.List;
 
 public interface AirportService {
 
-    void save(Airport airport);
-    List<Airport> findAll();
-    Airport findById(long id);
-    Airport findByName(String name);
+    AirportDto save(AirportDto airport);
+    List<AirportDto> findAll();
+    AirportDto findById(long id);
+    AirportDto findByName(String name);
     void deleteById(long id);
-    Airport update(long id, Airport airport);
+    AirportDto update(long id, AirportDto airport);
 }

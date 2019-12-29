@@ -1,46 +1,61 @@
 package com.ugurcangursen.ticketingapp.service.impl;
 
 import com.ugurcangursen.ticketingapp.dao.RouteDAO;
+import com.ugurcangursen.ticketingapp.dto.RouteDto;
 import com.ugurcangursen.ticketingapp.entity.Route;
 import com.ugurcangursen.ticketingapp.service.RouteService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class RouteServiceImpl implements RouteService {
 
-    private RouteDAO routeDAO;
+    private final RouteDAO routeDAO;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public RouteServiceImpl(RouteDAO routeDAO) {
+    public RouteServiceImpl(RouteDAO routeDAO, ModelMapper modelMapper) {
         this.routeDAO = routeDAO;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     @Transactional
-    public void save(Route route) {
-        routeDAO.save(route);
+    public RouteDto save(RouteDto route) {
+        if (route != null) {
+            Route routeDb = modelMapper.map(route, Route.class);
+            Route routeDbSaved = routeDAO.save(routeDb);
+            if (routeDbSaved != null) {
+                return modelMapper.map(routeDbSaved, RouteDto.class);
+            }
+        }
+        return route;
     }
 
     @Override
     @Transactional
-    public List<Route> findAll() {
-        return routeDAO.findAll();
+    public List<RouteDto> findAll() {
+        List<Route> data = routeDAO.findAll();
+        return Arrays.asList(modelMapper.map(data, RouteDto.class));
     }
 
     @Override
     @Transactional
-    public Route findById(long id) {
-        return routeDAO.findById(id);
+    public RouteDto findById(long id) {
+        Route routeDb = routeDAO.findById(id);
+        return modelMapper.map(routeDb,RouteDto.class);
     }
 
     @Override
     @Transactional
-    public Route findByName(String name) {
-        return routeDAO.findByName(name);
+    public RouteDto findByName(String name) {
+        Route routeDb = routeDAO.findByName(name);
+        return modelMapper.map(routeDb,RouteDto.class);
     }
 
     @Override
@@ -51,7 +66,14 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     @Transactional
-    public Route update(long id, Route route) {
-        return routeDAO.update(id,route);
+    public RouteDto update(long id, RouteDto route) {
+        if (route != null) {
+            Route routeDb = modelMapper.map(route, Route.class);
+            Route routeDbSaved = routeDAO.update(id,routeDb);
+            if (routeDbSaved != null) {
+                return modelMapper.map(routeDbSaved, RouteDto.class);
+            }
+        }
+        return route;
     }
 }

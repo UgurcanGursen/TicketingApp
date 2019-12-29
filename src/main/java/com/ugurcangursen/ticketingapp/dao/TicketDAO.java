@@ -5,7 +5,7 @@ import com.ugurcangursen.ticketingapp.entity.Ticket;
 import java.util.List;
 
 public interface TicketDAO {
-    void save(Ticket ticket);
+    Ticket save(Ticket ticket);
     List<Ticket> findAll();
     Ticket findById(long id);
     Ticket findByCode(String ticketCode);

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FlightDAO {
 
-    void save(Flight flight);
+    Flight save(Flight flight);
     List<Flight> findAll();
     Flight findById(long id);
     Flight findByName(String name);

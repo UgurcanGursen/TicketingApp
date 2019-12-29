@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AirportDAO {
 
-    void save(Airport airport);
+    Airport save(Airport airport);
     List<Airport> findAll();
     Airport findById(long id);
     Airport findByName(String name);

@@ -1,7 +1,7 @@
 package com.ugurcangursen.ticketingapp.rest;
 
 
-import com.ugurcangursen.ticketingapp.entity.Flight;
+import com.ugurcangursen.ticketingapp.dto.FlightDto;
 import com.ugurcangursen.ticketingapp.service.FlightService;
 import com.ugurcangursen.ticketingapp.util.RestPaths;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +21,15 @@ public class FlightRest {
 
     // expose "/rest/flights" and return list of flights
     @GetMapping
-    public List<Flight> findAll() {
+    public List<FlightDto> findAll() {
         return flightService.findAll();
     }
 
     // add mapping for GET /rest/flights/{id}
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
-    public Flight findById(@PathVariable long id) {
+    public FlightDto findById(@PathVariable long id) {
 
-        Flight flight = flightService.findById(id);
+        FlightDto flight = flightService.findById(id);
 
         if (flight == null) {
             throw new RuntimeException("Flight  id not found - " + id);
@@ -40,7 +40,7 @@ public class FlightRest {
 
     // add mapping for POST /rest/flights - add new flight
     @PostMapping
-    public Flight addFlight(@RequestBody Flight flight) {
+    public FlightDto addFlight(@RequestBody FlightDto flight) {
 
 
         flightService.save(flight);
@@ -50,9 +50,9 @@ public class FlightRest {
 
     // add mapping for GET /rest/flights/name/{name}
     @GetMapping("/name/{name}")
-    public Flight findByName(@PathVariable String name) {
+    public FlightDto findByName(@PathVariable String name) {
 
-        Flight flight = flightService.findByName(name);
+        FlightDto flight = flightService.findByName(name);
 
         if (flight == null) {
             throw new RuntimeException("Flight is not found - " + name);
@@ -65,7 +65,7 @@ public class FlightRest {
     @DeleteMapping("/{id}")
     public String deleteFlight(@PathVariable long id) {
 
-        Flight flight = flightService.findById(id);
+        FlightDto flight = flightService.findById(id);
 
         // throw exception if null
 
@@ -80,7 +80,7 @@ public class FlightRest {
 
     // add mapping for PUT /rest/flights/id - update existing flight
     @PutMapping("/{id}")
-    public Flight flightUpdate(@PathVariable long id, @RequestBody Flight flight) {
+    public FlightDto flightUpdate(@PathVariable long id, @RequestBody FlightDto flight) {
 
         flightService.update(id,flight);
         return flight;

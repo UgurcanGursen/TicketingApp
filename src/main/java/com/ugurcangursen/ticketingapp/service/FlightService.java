@@ -1,15 +1,16 @@
 package com.ugurcangursen.ticketingapp.service;
 
-import com.ugurcangursen.ticketingapp.entity.Flight;
+import com.ugurcangursen.ticketingapp.dto.FlightDto;
+
 
 import java.util.List;
 
 public interface FlightService {
 
-    void save(Flight flight);
-    List<Flight> findAll();
-    Flight findById(long id);
-    Flight findByName(String name);
+    FlightDto save(FlightDto flight);
+    List<FlightDto> findAll();
+    FlightDto findById(long id);
+    FlightDto findByName(String name);
     void deleteById(long id);
-    Flight update(long id, Flight flight);
+    FlightDto update(long id, FlightDto flight);
 }

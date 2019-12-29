@@ -1,15 +1,16 @@
 package com.ugurcangursen.ticketingapp.service;
 
-import com.ugurcangursen.ticketingapp.entity.AirlineCompany;
+
+import com.ugurcangursen.ticketingapp.dto.AirlineCompanyDto;
 
 import java.util.List;
 
 public interface AirlineCompanyService {
 
-    void save(AirlineCompany airlineCompany);
-    List<AirlineCompany> findAll();
-    AirlineCompany findById(long id);
-    AirlineCompany findByName(String name);
+    AirlineCompanyDto save(AirlineCompanyDto airlineCompany);
+    List<AirlineCompanyDto> findAll();
+    AirlineCompanyDto findById(long id);
+    AirlineCompanyDto findByName(String name);
     void deleteById(long id);
-    AirlineCompany update(long id, AirlineCompany airlineCompany);
+    AirlineCompanyDto update(long id, AirlineCompanyDto airlineCompany);
 }

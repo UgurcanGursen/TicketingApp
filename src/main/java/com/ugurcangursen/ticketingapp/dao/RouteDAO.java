@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RouteDAO {
 
-    void save(Route route);
+    Route save(Route route);
     List<Route> findAll();
     Route findById(long id);
     Route findByName(String name);

@@ -21,11 +21,11 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public void save(Flight flight) {
+    public Flight save(Flight flight) {
 
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
         currentSession.saveOrUpdate(flight); // save flight
-
+        return flight;
     }
 
     @Override

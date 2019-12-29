@@ -21,10 +21,11 @@ public class AirportDAOImpl implements AirportDAO {
     }
 
     @Override
-    public void save(Airport airport) {
+    public Airport save(Airport airport) {
 
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
         currentSession.saveOrUpdate(airport); // save airport
+        return airport;
 
     }
 

@@ -11,19 +11,13 @@ public class AirlineCompany implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(name = "name")
     private String name;
 
-//    @JoinColumn(name = "plane_airline_id")
-//    @OneToMany(fetch = FetchType.LAZY)
-//    private List<Plane> plane;
-//
-//    @JoinColumn(name = "flight_airline_id")
-//    @OneToMany(fetch = FetchType.LAZY)
-//    private List<Flight> flight;
+
 
     public AirlineCompany() {
     }
@@ -44,21 +38,7 @@ public class AirlineCompany implements Serializable {
         this.name = name;
     }
 
-//    public List<Plane> getPlane() {
-//        return plane;
-//    }
-//
-//    public void setPlane(List<Plane> plane) {
-//        this.plane = plane;
-//    }
-//
-//    public List<Flight> getFlight() {
-//        return flight;
-//    }
-//
-//    public void setFlight(List<Flight> flight) {
-//        this.flight = flight;
-//    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -67,8 +47,6 @@ public class AirlineCompany implements Serializable {
         AirlineCompany that = (AirlineCompany) o;
         return Objects.equals(getId(), that.getId()) &&
                 Objects.equals(getName(), that.getName());
-//                Objects.equals(getPlane(), that.getPlane()) &&
-//                Objects.equals(getFlight(), that.getFlight());
     }
 
     @Override
@@ -81,8 +59,6 @@ public class AirlineCompany implements Serializable {
         return "AirlineCompany{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-//                ", plane=" + plane +
-//                ", flight=" + flight +
                 '}';
     }
 }

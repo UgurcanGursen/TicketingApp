@@ -1,33 +1,31 @@
-package com.ugurcangursen.ticketingapp.entity;
+package com.ugurcangursen.ticketingapp.dto;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.ugurcangursen.ticketingapp.entity.Flight;
+
 import java.util.Objects;
 
-@Entity
-@Table(name = "tickets")
 
-public class Ticket implements Serializable {
+public class TicketDto {
 
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "ticket_code")
     private String ticketCode;
 
-    @JoinColumn(name = "flight_ticket_id")
-    @ManyToOne(fetch = FetchType.LAZY)
     private Flight flight;
 
-    @Column(name = "ticket_price")
     private int ticketPrice;
 
-    @Column(name = "is_ticket_sold")
     private boolean isTicketSold;
 
-    public Ticket() {
+    public TicketDto() {
+    }
+
+    public TicketDto(long id, String ticketCode, Flight flight, int ticketPrice, boolean isTicketSold) {
+        this.id = id;
+        this.ticketCode = ticketCode;
+        this.flight = flight;
+        this.ticketPrice = ticketPrice;
+        this.isTicketSold = isTicketSold;
     }
 
     public long getId() {
@@ -62,7 +60,6 @@ public class Ticket implements Serializable {
         this.ticketPrice = ticketPrice;
     }
 
-
     public boolean isTicketSold() {
         return isTicketSold;
     }
@@ -75,12 +72,12 @@ public class Ticket implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ticket ticket1 = (Ticket) o;
-        return id == ticket1.id &&
-                ticketPrice == ticket1.ticketPrice &&
-                isTicketSold == ticket1.isTicketSold &&
-                Objects.equals(ticketCode, ticket1.ticketCode) &&
-                Objects.equals(flight, ticket1.flight);
+        TicketDto ticketDto = (TicketDto) o;
+        return id == ticketDto.id &&
+                ticketPrice == ticketDto.ticketPrice &&
+                isTicketSold == ticketDto.isTicketSold &&
+                Objects.equals(ticketCode, ticketDto.ticketCode) &&
+                Objects.equals(flight, ticketDto.flight);
     }
 
     @Override
@@ -90,7 +87,7 @@ public class Ticket implements Serializable {
 
     @Override
     public String toString() {
-        return "Ticket{" +
+        return "TicketDto{" +
                 "id=" + id +
                 ", ticketCode='" + ticketCode + '\'' +
                 ", flight=" + flight +

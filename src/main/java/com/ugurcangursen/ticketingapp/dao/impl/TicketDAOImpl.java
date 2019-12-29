@@ -21,11 +21,11 @@ public class TicketDAOImpl implements TicketDAO {
     }
 
     @Override
-    public void save(Ticket ticket) {
+    public Ticket save(Ticket ticket) {
 
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
         currentSession.saveOrUpdate(ticket); // save ticket
-
+        return ticket;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class TicketDAOImpl implements TicketDAO {
     @Override
     public Ticket update(long id, Ticket ticket) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query theQuery = currentSession.createQuery("update Ticket  set ticketCode =: ticketCode,ticketPrice =: ticketPrice,isTicketSold =:isTicketSold where id =:id");
+        Query theQuery = currentSession.createQuery("update Ticket  set ticketCode =: ticketCode,ticketPrice =: ticketPrice,isTicketSold =: isTicketSold where id =:id");
         theQuery.setParameter("id", id);
         theQuery.setParameter("ticketCode", ticket.getTicketCode());
         theQuery.setParameter("ticketPrice", ticket.getTicketPrice());

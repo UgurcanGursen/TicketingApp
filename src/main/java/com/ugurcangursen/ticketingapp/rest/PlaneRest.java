@@ -1,7 +1,7 @@
 package com.ugurcangursen.ticketingapp.rest;
 
 
-import com.ugurcangursen.ticketingapp.entity.Plane;
+import com.ugurcangursen.ticketingapp.dto.PlaneDto;
 import com.ugurcangursen.ticketingapp.service.PlaneService;
 import com.ugurcangursen.ticketingapp.util.RestPaths;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +21,15 @@ public class PlaneRest {
 
     // expose "/rest/planes" and return list of planes
     @GetMapping
-    public List<Plane> findAll() {
+    public List<PlaneDto> findAll() {
         return planeService.findAll();
     }
 
     // add mapping for GET /rest/planes/{id}
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
-    public Plane findById(@PathVariable long id) {
+    public PlaneDto findById(@PathVariable long id) {
 
-        Plane plane = planeService.findById(id);
+        PlaneDto plane = planeService.findById(id);
 
         if (plane == null) {
             throw new RuntimeException("Plane  id not found - " + id);
@@ -40,7 +40,7 @@ public class PlaneRest {
 
     // add mapping for POST /rest/planes - add new plane
     @PostMapping
-    public Plane addPlane(@RequestBody Plane plane) {
+    public PlaneDto addPlane(@RequestBody PlaneDto plane) {
 
 
         planeService.save(plane);
@@ -50,9 +50,9 @@ public class PlaneRest {
 
     // add mapping for GET /rest/planes/name/{name}
     @GetMapping("/name/{name}")
-    public Plane findByName(@PathVariable String name) {
+    public PlaneDto findByName(@PathVariable String name) {
 
-        Plane plane = planeService.findByName(name);
+        PlaneDto plane = planeService.findByName(name);
 
         if (plane == null) {
             throw new RuntimeException("Plane is not found - " + name);
@@ -65,7 +65,7 @@ public class PlaneRest {
     @DeleteMapping("/{id}")
     public String deletePlane(@PathVariable long id) {
 
-        Plane plane = planeService.findById(id);
+        PlaneDto plane = planeService.findById(id);
 
         // throw exception if null
 
@@ -80,7 +80,7 @@ public class PlaneRest {
 
     // add mapping for PUT /rest/planes/id - update existing plane
     @PutMapping("/{id}")
-    public Plane planeUpdate(@PathVariable long id, @RequestBody Plane plane) {
+    public PlaneDto planeUpdate(@PathVariable long id, @RequestBody PlaneDto plane) {
 
         planeService.update(id,plane);
         return plane;

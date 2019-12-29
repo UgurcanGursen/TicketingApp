@@ -2,50 +2,65 @@ package com.ugurcangursen.ticketingapp.service.impl;
 
 import com.ugurcangursen.ticketingapp.dao.FlightDAO;
 import com.ugurcangursen.ticketingapp.dao.TicketDAO;
+import com.ugurcangursen.ticketingapp.dto.TicketDto;
 import com.ugurcangursen.ticketingapp.entity.Flight;
 import com.ugurcangursen.ticketingapp.entity.Ticket;
 import com.ugurcangursen.ticketingapp.service.TicketService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class TicketServiceImpl implements TicketService {
 
-    private TicketDAO ticketDAO;
-    private FlightDAO flightDAO;
+    private final TicketDAO ticketDAO;
+    private final FlightDAO flightDAO;
+    private final ModelMapper modelMapper;
 
 
     @Autowired
-    public TicketServiceImpl(TicketDAO ticketDAO, FlightDAO flightDAO) {
+    public TicketServiceImpl(TicketDAO ticketDAO, FlightDAO flightDAO, ModelMapper modelMapper) {
         this.ticketDAO = ticketDAO;
         this.flightDAO = flightDAO;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     @Transactional
-    public void save(Ticket ticket) {
-        ticketDAO.save(ticket);
+    public TicketDto save(TicketDto ticket) {
+        if (ticket != null) {
+            Ticket ticketDb = modelMapper.map(ticket, Ticket.class);
+            Ticket ticketDbSaved = ticketDAO.save(ticketDb);
+            if (ticketDbSaved != null) {
+                return modelMapper.map(ticketDbSaved, TicketDto.class);
+            }
+        }
+        return ticket;
     }
 
     @Override
     @Transactional
-    public List<Ticket> findAll() {
-        return ticketDAO.findAll();
+    public List<TicketDto> findAll() {
+        List<Ticket> data = ticketDAO.findAll();
+        return Arrays.asList(modelMapper.map(data,TicketDto.class));
     }
 
     @Override
     @Transactional
-    public Ticket findById(long id) {
-        return ticketDAO.findById(id);
+    public TicketDto findById(long id) {
+        Ticket ticket = ticketDAO.findById(id);
+        return modelMapper.map(ticket,TicketDto.class);
     }
 
     @Override
     @Transactional
-    public Ticket findByCode(String ticketCode) {
-        return ticketDAO.findByCode(ticketCode);
+    public TicketDto findByCode(String ticketCode) {
+        Ticket ticket = ticketDAO.findByCode(ticketCode);
+        return modelMapper.map(ticket,TicketDto.class);
     }
 
     @Override
@@ -55,32 +70,41 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket update(long id, Ticket ticket) {
+    @Transactional
+    public TicketDto update(long id, TicketDto ticket) {
 
-        if(ticket.isTicketSold()== true) {
-            // Get quota status of Flight
-            Flight flight = flightDAO.findById(ticket.getFlight().getId());
-            int quota = flight.getNumberOfSeats();
-            int fullQuota = flight.getNumOfFullSeats();
+        if (ticket != null) {
+            Ticket ticketDb = modelMapper.map(ticket, Ticket.class);
 
-            if(fullQuota < quota) {
-                // Increase quota if it is not full yet
-                flight.setNumOfFullSeats(fullQuota + 1);
+            if (ticketDb.isTicketSold()) {
+                // Get quota status of Flight
+                Flight flight = flightDAO.findById(ticketDb.getFlight().getId());
+                int quota = flight.getNumberOfSeats();
+                int fullQuota = flight.getNumOfFullSeats();
+
+                if (fullQuota < quota) {
+                    // Increase quota if it is not full yet
+                    flight.setNumOfFullSeats(fullQuota + 1);
 
 
-                int newPer = (fullQuota / quota) * 100;
-                int currentPer = flight.getFullSeatsPer();
-                int diffPer = (newPer % 10) - currentPer;
-                if(diffPer > 0) {
-                    flight.setFullSeatsPer(newPer % 10);
-                    int newPrice = ticket.getTicketPrice() + ticket.getTicketPrice() * (diffPer / 100);
-                    ticket.setTicketPrice(newPrice);
+                    int newPer = (fullQuota / quota) * 100;
+                    int currentPer = flight.getFullSeatsPer();
+                    int diffPer = (newPer % 10) - currentPer;
+                    if (diffPer > 0) {
+                        flight.setFullSeatsPer(newPer % 10);
+                        int newPrice = ticketDb.getTicketPrice() + ticketDb.getTicketPrice() * (diffPer / 100);
+                        ticketDb.setTicketPrice(newPrice);
+                    }
                 }
             }
 
+
+            Ticket ticketDbSaved = ticketDAO.update(id,ticketDb);
+            if (ticketDbSaved != null) {
+                return modelMapper.map(ticketDbSaved, TicketDto.class);
+            }
         }
 
-
-        return ticketDAO.update(id,ticket);
+        return ticket;
     }
 }
