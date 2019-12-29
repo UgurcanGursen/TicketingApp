@@ -4,6 +4,7 @@ package com.ugurcangursen.ticketingapp.rest;
 import com.ugurcangursen.ticketingapp.dto.FlightDto;
 import com.ugurcangursen.ticketingapp.service.FlightService;
 import com.ugurcangursen.ticketingapp.util.RestPaths;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +22,15 @@ public class FlightRest {
 
     // expose "/rest/flights" and return list of flights
     @GetMapping
+    @ApiOperation(value = "Find All Operation", response = FlightDto.class)
     public List<FlightDto> findAll() {
-        return flightService.findAll();
+        List<FlightDto> data = flightService.findAll();
+        return data;
     }
 
     // add mapping for GET /rest/flights/{id}
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
+    @ApiOperation(value = "Find By Id Operation", response = FlightDto.class)
     public FlightDto findById(@PathVariable long id) {
 
         FlightDto flight = flightService.findById(id);
@@ -40,16 +44,15 @@ public class FlightRest {
 
     // add mapping for POST /rest/flights - add new flight
     @PostMapping
+    @ApiOperation(value = "Add Flight Operation", response = FlightDto.class)
     public FlightDto addFlight(@RequestBody FlightDto flight) {
 
-
-        flightService.save(flight);
-
-        return flight;
+        return flightService.save(flight);
     }
 
     // add mapping for GET /rest/flights/name/{name}
     @GetMapping("/name/{name}")
+    @ApiOperation(value = "Find By Name Operation", response = FlightDto.class)
     public FlightDto findByName(@PathVariable String name) {
 
         FlightDto flight = flightService.findByName(name);
@@ -63,6 +66,7 @@ public class FlightRest {
 
     // add mapping for DELETE /rest/flights/{id} - delete flight
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete Operation", response = FlightDto.class)
     public String deleteFlight(@PathVariable long id) {
 
         FlightDto flight = flightService.findById(id);
@@ -80,9 +84,10 @@ public class FlightRest {
 
     // add mapping for PUT /rest/flights/id - update existing flight
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update Operation", response = FlightDto.class)
     public FlightDto flightUpdate(@PathVariable long id, @RequestBody FlightDto flight) {
 
-        flightService.update(id,flight);
+        flightService.update(id, flight);
         return flight;
     }
 

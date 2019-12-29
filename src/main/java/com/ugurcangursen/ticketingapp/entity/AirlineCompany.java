@@ -2,7 +2,6 @@ package com.ugurcangursen.ticketingapp.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,21 +11,20 @@ public class AirlineCompany implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
 
-
     public AirlineCompany() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -38,20 +36,18 @@ public class AirlineCompany implements Serializable {
         this.name = name;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AirlineCompany)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AirlineCompany that = (AirlineCompany) o;
-        return Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getName(), that.getName());
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName());
+        return Objects.hash(id, name);
     }
 
     @Override

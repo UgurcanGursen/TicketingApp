@@ -3,7 +3,6 @@ package com.ugurcangursen.ticketingapp.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -46,9 +45,6 @@ public class Flight implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private AirlineCompany airlineCompany;
 
-    @JoinColumn(name = "flight_ticket_id")
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Ticket> tickets;
 
     public Flight() {
     }
@@ -133,13 +129,6 @@ public class Flight implements Serializable {
         this.airlineCompany = airlineCompany;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -155,13 +144,12 @@ public class Flight implements Serializable {
                 Objects.equals(getStartingDate(), flight.getStartingDate()) &&
                 Objects.equals(getEndingDate(), flight.getEndingDate()) &&
                 Objects.equals(getRoute(), flight.getRoute()) &&
-                Objects.equals(getAirlineCompany(), flight.getAirlineCompany()) &&
-                Objects.equals(getTickets(), flight.getTickets());
+                Objects.equals(getAirlineCompany(), flight.getAirlineCompany());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getStartingDate(), getEndingDate(), getDuration(), getNumberOfSeats(), getNumOfFullSeats(), getFullSeatsPer(), getRoute(), getAirlineCompany(), getTickets());
+        return Objects.hash(getId(), getName(), getStartingDate(), getEndingDate(), getDuration(), getNumberOfSeats(), getNumOfFullSeats(), getFullSeatsPer(), getRoute(), getAirlineCompany());
     }
 
     @Override
@@ -177,7 +165,6 @@ public class Flight implements Serializable {
                 ", fullSeatsPer=" + fullSeatsPer +
                 ", route=" + route +
                 ", airlineCompany=" + airlineCompany +
-                ", tickets=" + tickets +
                 '}';
     }
 }

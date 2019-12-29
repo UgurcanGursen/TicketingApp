@@ -4,6 +4,7 @@ package com.ugurcangursen.ticketingapp.rest;
 import com.ugurcangursen.ticketingapp.dto.AirportDto;
 import com.ugurcangursen.ticketingapp.service.AirportService;
 import com.ugurcangursen.ticketingapp.util.RestPaths;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,15 @@ public class AirportRest {
 
     // expose "/rest/airports" and return list of airports
     @GetMapping
+    @ApiOperation(value = "Find All Operation", response = AirportDto.class)
     public List<AirportDto> findAll() {
-        return airportService.findAll();
+        List<AirportDto> data = airportService.findAll();
+        return data;
     }
 
     // add mapping for GET /rest/airports/{id}
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
+    @ApiOperation(value = "Find By Id Operation", response = AirportDto.class)
     public AirportDto findById(@PathVariable long id) {
 
         AirportDto airport = airportService.findById(id);
@@ -39,6 +43,7 @@ public class AirportRest {
 
     // add mapping for POST /rest/airports - add new airport
     @PostMapping
+    @ApiOperation(value = "Add Airport Operation", response = AirportDto.class)
     public AirportDto addAirport(@RequestBody AirportDto airport) {
 
         return airportService.save(airport);
@@ -46,6 +51,7 @@ public class AirportRest {
 
     // add mapping for GET /rest/airports/name/{name}
     @GetMapping("/name/{name}")
+    @ApiOperation(value = "Find By Name Operation", response = AirportDto.class)
     public AirportDto findByName(@PathVariable String name) {
 
         AirportDto airport = airportService.findByName(name);
@@ -59,6 +65,7 @@ public class AirportRest {
 
     // add mapping for DELETE /rest/airports/{id} - delete airport
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete Operation", response = AirportDto.class)
     public String deleteAirport(@PathVariable long id) {
 
         AirportDto airport = airportService.findById(id);
@@ -76,10 +83,11 @@ public class AirportRest {
 
     // add mapping for PUT /rest/airports/id - update existing airport
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update Operation", response = AirportDto.class)
     public AirportDto airportUpdate(@PathVariable long id, @RequestBody AirportDto airport) {
 
 
-        return airportService.update(id,airport);
+        return airportService.update(id, airport);
     }
 
 

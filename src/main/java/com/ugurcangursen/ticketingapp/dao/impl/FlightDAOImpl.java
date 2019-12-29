@@ -47,7 +47,7 @@ public class FlightDAOImpl implements FlightDAO {
     public Flight findById(long id) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Flight flight = currentSession.get(Flight.class,id); // get the flight
+        Flight flight = currentSession.get(Flight.class, id); // get the flight
 
         return flight;
     }
@@ -56,7 +56,13 @@ public class FlightDAOImpl implements FlightDAO {
     public Flight findByName(String name) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Flight flight = currentSession.get(Flight.class,name);
+        // create a query
+        Query theQuery =
+                currentSession.createQuery("select a from Flight a where a.name =:name ", Flight.class);
+        theQuery.setParameter("name", name);
+
+        // execute query and get result list
+        Flight flight = (Flight) theQuery.list().get(0);
 
         return flight;
     }

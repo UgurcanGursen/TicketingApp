@@ -4,6 +4,7 @@ package com.ugurcangursen.ticketingapp.rest;
 import com.ugurcangursen.ticketingapp.dto.RouteDto;
 import com.ugurcangursen.ticketingapp.service.RouteService;
 import com.ugurcangursen.ticketingapp.util.RestPaths;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,15 @@ public class RouteRest {
 
     // expose "/rest/routes" and return list of routes
     @GetMapping
+    @ApiOperation(value = "Find All Operation", response = RouteDto.class)
     public List<RouteDto> findAll() {
-        return routeService.findAll();
+        List<RouteDto> data = routeService.findAll();
+        return data;
     }
 
     // add mapping for GET /rest/routes/{id}
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
+    @ApiOperation(value = "Find By Id Operation", response = RouteDto.class)
     public RouteDto findById(@PathVariable long id) {
 
         RouteDto route = routeService.findById(id);
@@ -39,19 +43,18 @@ public class RouteRest {
 
     // add mapping for POST /rest/routes - add new route
     @PostMapping
+    @ApiOperation(value = "Add Route Operation", response = RouteDto.class)
     public RouteDto addRoute(@RequestBody RouteDto route) {
 
-
-        routeService.save(route);
-
-        return route;
+        return routeService.save(route);
     }
 
     // add mapping for GET /rest/routes/name/{name}
     @GetMapping("/name/{name}")
-    public RouteDto findByName(@PathVariable String name) {
+    @ApiOperation(value = "Find By Name Operation", response = RouteDto.class)
+    public List<RouteDto> findByName(@PathVariable String name) {
 
-        RouteDto route = routeService.findByName(name);
+        List<RouteDto> route = routeService.findByName(name);
 
         if (route == null) {
             throw new RuntimeException("Route is not found - " + name);
@@ -62,6 +65,7 @@ public class RouteRest {
 
     // add mapping for DELETE /rest/routes/{id} - delete route
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete Operation", response = RouteDto.class)
     public String deleteRoute(@PathVariable long id) {
 
         RouteDto route = routeService.findById(id);
@@ -79,9 +83,10 @@ public class RouteRest {
 
     // add mapping for PUT /rest/routes/id - update existing route
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update Operation", response = RouteDto.class)
     public RouteDto routeUpdate(@PathVariable long id, @RequestBody RouteDto route) {
 
-        routeService.update(id,route);
+        routeService.update(id, route);
         return route;
     }
 

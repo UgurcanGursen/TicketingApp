@@ -1,7 +1,9 @@
 package com.ugurcangursen.ticketingapp.service.impl;
 
+import com.ugurcangursen.ticketingapp.dao.AirlineCompanyDAO;
 import com.ugurcangursen.ticketingapp.dao.PlaneDAO;
 import com.ugurcangursen.ticketingapp.dto.PlaneDto;
+import com.ugurcangursen.ticketingapp.entity.AirlineCompany;
 import com.ugurcangursen.ticketingapp.entity.Plane;
 import com.ugurcangursen.ticketingapp.service.PlaneService;
 import org.modelmapper.ModelMapper;
@@ -17,11 +19,13 @@ public class PlaneServiceImpl implements PlaneService {
 
     private final PlaneDAO planeDAO;
     private final ModelMapper modelMapper;
+    private final AirlineCompanyDAO airlineCompanyDAO;
 
     @Autowired
-    public PlaneServiceImpl(PlaneDAO planeDAO, ModelMapper modelMapper) {
+    public PlaneServiceImpl(PlaneDAO planeDAO, ModelMapper modelMapper, AirlineCompanyDAO airlineCompanyDAO) {
         this.planeDAO = planeDAO;
         this.modelMapper = modelMapper;
+        this.airlineCompanyDAO = airlineCompanyDAO;
     }
 
     @Override
@@ -29,6 +33,8 @@ public class PlaneServiceImpl implements PlaneService {
     public PlaneDto save(PlaneDto plane) {
         if (plane != null) {
             Plane planeDb = modelMapper.map(plane, Plane.class);
+            AirlineCompany airlineCompany = airlineCompanyDAO.findById(plane.getAirlineCompanyId());
+            planeDb.setAirlineCompany(airlineCompany);
             Plane planeDbSaved = planeDAO.save(planeDb);
             if (planeDbSaved != null) {
                 return modelMapper.map(planeDbSaved, PlaneDto.class);
@@ -41,21 +47,21 @@ public class PlaneServiceImpl implements PlaneService {
     @Transactional
     public List<PlaneDto> findAll() {
         List<Plane> data = planeDAO.findAll();
-        return Arrays.asList(modelMapper.map(data, PlaneDto.class));
+        return Arrays.asList(modelMapper.map(data, PlaneDto[].class));
     }
 
     @Override
     @Transactional
     public PlaneDto findById(long id) {
         Plane planeDb = planeDAO.findById(id);
-        return modelMapper.map(planeDb,PlaneDto.class);
+        return modelMapper.map(planeDb, PlaneDto.class);
     }
 
     @Override
     @Transactional
     public PlaneDto findByName(String name) {
         Plane planeDb = planeDAO.findByName(name);
-        return modelMapper.map(planeDb,PlaneDto.class);
+        return modelMapper.map(planeDb, PlaneDto.class);
     }
 
     @Override
@@ -69,7 +75,7 @@ public class PlaneServiceImpl implements PlaneService {
     public PlaneDto update(long id, PlaneDto plane) {
         if (plane != null) {
             Plane planeDb = modelMapper.map(plane, Plane.class);
-            Plane planeDbSaved = planeDAO.update(id,planeDb);
+            Plane planeDbSaved = planeDAO.update(id, planeDb);
             if (planeDbSaved != null) {
                 return modelMapper.map(planeDbSaved, PlaneDto.class);
             }

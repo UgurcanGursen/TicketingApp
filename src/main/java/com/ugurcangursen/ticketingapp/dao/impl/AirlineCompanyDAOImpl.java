@@ -49,7 +49,7 @@ public class AirlineCompanyDAOImpl implements AirlineCompanyDAO {
 
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        AirlineCompany airlineCompany = currentSession.get(AirlineCompany.class,id); // get the company
+        AirlineCompany airlineCompany = currentSession.get(AirlineCompany.class, id); // get the company
 
         return airlineCompany;
     }

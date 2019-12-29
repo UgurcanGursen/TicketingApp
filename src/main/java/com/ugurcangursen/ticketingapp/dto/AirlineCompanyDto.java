@@ -1,25 +1,28 @@
 package com.ugurcangursen.ticketingapp.dto;
 
-import java.util.Objects;
+import io.swagger.annotations.ApiModelProperty;
+
 
 public class AirlineCompanyDto {
 
-    private long id;
+    @ApiModelProperty(required = true, value = "ID")
+    private Long id;
+    @ApiModelProperty(required = true, value = "Airline Name")
     private String name;
 
     public AirlineCompanyDto() {
     }
 
-    public AirlineCompanyDto(long id, String name) {
+    public AirlineCompanyDto(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -31,25 +34,5 @@ public class AirlineCompanyDto {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AirlineCompanyDto that = (AirlineCompanyDto) o;
-        return id == that.id &&
-                Objects.equals(name, that.name);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
-    @Override
-    public String toString() {
-        return "AirlineCompanyDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

@@ -46,16 +46,22 @@ public class RouteDAOImpl implements RouteDAO {
     public Route findById(long id) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Route route = currentSession.get(Route.class,id); // get the route
+        Route route = currentSession.get(Route.class, id); // get the route
 
         return route;
     }
 
     @Override
-    public Route findByName(String name) {
+    public List<Route> findByName(String name) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Route route = currentSession.get(Route.class,name);
+        // create a query
+        Query<Route> theQuery =
+                currentSession.createQuery("select a from Route a where a.name =:name ", Route.class);
+        theQuery.setParameter("name", name);
+
+        // execute query and get result list
+        List<Route> route = theQuery.getResultList();
 
         return route;
     }

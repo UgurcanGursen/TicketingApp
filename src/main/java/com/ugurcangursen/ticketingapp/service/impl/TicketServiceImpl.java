@@ -34,6 +34,8 @@ public class TicketServiceImpl implements TicketService {
     public TicketDto save(TicketDto ticket) {
         if (ticket != null) {
             Ticket ticketDb = modelMapper.map(ticket, Ticket.class);
+            Flight flight = flightDAO.findById(ticket.getFlightId());
+            ticket.setFlight(flight);
             Ticket ticketDbSaved = ticketDAO.save(ticketDb);
             if (ticketDbSaved != null) {
                 return modelMapper.map(ticketDbSaved, TicketDto.class);
@@ -46,21 +48,21 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     public List<TicketDto> findAll() {
         List<Ticket> data = ticketDAO.findAll();
-        return Arrays.asList(modelMapper.map(data,TicketDto.class));
+        return Arrays.asList(modelMapper.map(data, TicketDto[].class));
     }
 
     @Override
     @Transactional
     public TicketDto findById(long id) {
         Ticket ticket = ticketDAO.findById(id);
-        return modelMapper.map(ticket,TicketDto.class);
+        return modelMapper.map(ticket, TicketDto.class);
     }
 
     @Override
     @Transactional
     public TicketDto findByCode(String ticketCode) {
         Ticket ticket = ticketDAO.findByCode(ticketCode);
-        return modelMapper.map(ticket,TicketDto.class);
+        return modelMapper.map(ticket, TicketDto.class);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class TicketServiceImpl implements TicketService {
             }
 
 
-            Ticket ticketDbSaved = ticketDAO.update(id,ticketDb);
+            Ticket ticketDbSaved = ticketDAO.update(id, ticketDb);
             if (ticketDbSaved != null) {
                 return modelMapper.map(ticketDbSaved, TicketDto.class);
             }

@@ -9,15 +9,15 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class TicketingAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TicketingAppApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TicketingAppApplication.class, args);
+    }
 
-	@Bean
-	public ModelMapper getModelMapper() {
-		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		return modelMapper;
-	}
+    @Bean
+    public ModelMapper getModelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
 
 }

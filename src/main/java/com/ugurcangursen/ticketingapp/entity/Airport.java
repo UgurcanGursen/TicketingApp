@@ -2,7 +2,6 @@ package com.ugurcangursen.ticketingapp.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,13 +19,6 @@ public class Airport implements Serializable {
     @Column(name = "location")
     private String location;
 
-    @JoinColumn(name = "starting_airport_id")
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Route> startingRoute;
-
-    @JoinColumn(name = "ending_airport_id")
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Route> endingRoute;
 
     public Airport() {
     }
@@ -55,21 +47,6 @@ public class Airport implements Serializable {
         this.location = location;
     }
 
-    public List<Route> getStartingRoute() {
-        return startingRoute;
-    }
-
-    public void setStartingRoute(List<Route> startingRoute) {
-        this.startingRoute = startingRoute;
-    }
-
-    public List<Route> getEndingRoute() {
-        return endingRoute;
-    }
-
-    public void setEndingRoute(List<Route> endingRoute) {
-        this.endingRoute = endingRoute;
-    }
 
     @Override
     public String toString() {
@@ -77,8 +54,6 @@ public class Airport implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
-                ", startingRoute=" + startingRoute +
-                ", endingRoute=" + endingRoute +
                 '}';
     }
 
@@ -89,13 +64,11 @@ public class Airport implements Serializable {
         Airport airport = (Airport) o;
         return Objects.equals(getId(), airport.getId()) &&
                 Objects.equals(getName(), airport.getName()) &&
-                Objects.equals(getLocation(), airport.getLocation()) &&
-                Objects.equals(getStartingRoute(), airport.getStartingRoute()) &&
-                Objects.equals(getEndingRoute(), airport.getEndingRoute());
+                Objects.equals(getLocation(), airport.getLocation());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getLocation(), getStartingRoute(), getEndingRoute());
+        return Objects.hash(getId(), getName(), getLocation());
     }
 }

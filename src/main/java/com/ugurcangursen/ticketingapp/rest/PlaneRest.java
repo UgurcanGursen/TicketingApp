@@ -4,6 +4,7 @@ package com.ugurcangursen.ticketingapp.rest;
 import com.ugurcangursen.ticketingapp.dto.PlaneDto;
 import com.ugurcangursen.ticketingapp.service.PlaneService;
 import com.ugurcangursen.ticketingapp.util.RestPaths;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,12 +22,15 @@ public class PlaneRest {
 
     // expose "/rest/planes" and return list of planes
     @GetMapping
+    @ApiOperation(value = "Find All Operation", response = PlaneDto.class)
     public List<PlaneDto> findAll() {
-        return planeService.findAll();
+        List<PlaneDto> data = planeService.findAll();
+        return data;
     }
 
     // add mapping for GET /rest/planes/{id}
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
+    @ApiOperation(value = "Find By Id Operation", response = PlaneDto.class)
     public PlaneDto findById(@PathVariable long id) {
 
         PlaneDto plane = planeService.findById(id);
@@ -40,16 +44,15 @@ public class PlaneRest {
 
     // add mapping for POST /rest/planes - add new plane
     @PostMapping
+    @ApiOperation(value = "Add Plane Operation", response = PlaneDto.class)
     public PlaneDto addPlane(@RequestBody PlaneDto plane) {
 
-
-        planeService.save(plane);
-
-        return plane;
+        return planeService.save(plane);
     }
 
     // add mapping for GET /rest/planes/name/{name}
     @GetMapping("/name/{name}")
+    @ApiOperation(value = "Find By Name Operation", response = PlaneDto.class)
     public PlaneDto findByName(@PathVariable String name) {
 
         PlaneDto plane = planeService.findByName(name);
@@ -63,6 +66,7 @@ public class PlaneRest {
 
     // add mapping for DELETE /rest/planes/{id} - delete plane
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete Operation", response = PlaneDto.class)
     public String deletePlane(@PathVariable long id) {
 
         PlaneDto plane = planeService.findById(id);
@@ -80,9 +84,10 @@ public class PlaneRest {
 
     // add mapping for PUT /rest/planes/id - update existing plane
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update Operation", response = PlaneDto.class)
     public PlaneDto planeUpdate(@PathVariable long id, @RequestBody PlaneDto plane) {
 
-        planeService.update(id,plane);
+        planeService.update(id, plane);
         return plane;
     }
 }

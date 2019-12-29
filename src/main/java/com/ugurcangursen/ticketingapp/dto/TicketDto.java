@@ -1,29 +1,33 @@
 package com.ugurcangursen.ticketingapp.dto;
 
 import com.ugurcangursen.ticketingapp.entity.Flight;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Objects;
 
 
 public class TicketDto {
 
+    @ApiModelProperty(required = true, value = "ID")
     private long id;
-
+    @ApiModelProperty(required = true, value = "Ticket Code")
     private String ticketCode;
 
     private Flight flight;
-
+    private long flightId;
+    @ApiModelProperty(required = true, value = "Ticket Price")
     private int ticketPrice;
-
+    @ApiModelProperty(required = true, value = "Is Ticket Sold")
     private boolean isTicketSold;
 
     public TicketDto() {
     }
 
-    public TicketDto(long id, String ticketCode, Flight flight, int ticketPrice, boolean isTicketSold) {
+    public TicketDto(long id, String ticketCode, Flight flight, long flightId, int ticketPrice, boolean isTicketSold) {
         this.id = id;
         this.ticketCode = ticketCode;
         this.flight = flight;
+        this.flightId = flightId;
         this.ticketPrice = ticketPrice;
         this.isTicketSold = isTicketSold;
     }
@@ -66,6 +70,14 @@ public class TicketDto {
 
     public void setTicketSold(boolean ticketSold) {
         isTicketSold = ticketSold;
+    }
+
+    public long getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(long flightId) {
+        this.flightId = flightId;
     }
 
     @Override

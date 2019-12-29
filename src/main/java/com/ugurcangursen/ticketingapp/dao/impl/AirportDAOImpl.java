@@ -48,7 +48,7 @@ public class AirportDAOImpl implements AirportDAO {
     public Airport findById(long id) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Airport airport = currentSession.get(Airport.class,id); // get the airport
+        Airport airport = currentSession.get(Airport.class, id); // get the airport
 
         return airport;
     }
@@ -57,7 +57,13 @@ public class AirportDAOImpl implements AirportDAO {
     public Airport findByName(String name) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Airport airport = currentSession.get(Airport.class,name);
+        // create a query
+        Query theQuery =
+                currentSession.createQuery("select a from Airport a where a.name =:name ", Airport.class);
+        theQuery.setParameter("name", name);
+
+        // execute query and get result list
+        Airport airport = (Airport) theQuery.list().get(0);
 
         return airport;
     }

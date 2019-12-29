@@ -2,40 +2,41 @@ package com.ugurcangursen.ticketingapp.dto;
 
 import com.ugurcangursen.ticketingapp.entity.AirlineCompany;
 import com.ugurcangursen.ticketingapp.entity.Route;
-import com.ugurcangursen.ticketingapp.entity.Ticket;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class FlightDto {
 
+    @ApiModelProperty(required = true, value = "ID")
     private long id;
-
+    @ApiModelProperty(required = true, value = "Mame of Flight")
     private String name;
-
+    @ApiModelProperty(required = true, value = "Starting Date and Time of Flight")
     private Date startingDate;
-
+    @ApiModelProperty(required = true, value = "Ending Date and Time of Flight")
     private Date endingDate;
-
+    @ApiModelProperty(required = true, value = "Flight Duration")
     private int duration;
-
+    @ApiModelProperty(required = true, value = "Number Of Seats")
     private int numberOfSeats;
-
+    @ApiModelProperty(required = true, value = "Number Of Seats Sold")
     private int numOfFullSeats;
-
+    @ApiModelProperty(required = true, value = "Seats Sold Percentage")
     private int fullSeatsPer;
 
     private Route route;
+    private long routeId;
 
     private AirlineCompany airlineCompany;
+    private long airlineCompanyId;
 
-    private List<Ticket> tickets;
 
     public FlightDto() {
     }
 
-    public FlightDto(long id, String name, Date startingDate, Date endingDate, int duration, int numberOfSeats, int numOfFullSeats, int fullSeatsPer, Route route, AirlineCompany airlineCompany, List<Ticket> tickets) {
+    public FlightDto(long id, String name, Date startingDate, Date endingDate, int duration, int numberOfSeats, int numOfFullSeats, int fullSeatsPer, Route route, AirlineCompany airlineCompany) {
         this.id = id;
         this.name = name;
         this.startingDate = startingDate;
@@ -46,7 +47,6 @@ public class FlightDto {
         this.fullSeatsPer = fullSeatsPer;
         this.route = route;
         this.airlineCompany = airlineCompany;
-        this.tickets = tickets;
     }
 
     public long getId() {
@@ -129,13 +129,22 @@ public class FlightDto {
         this.airlineCompany = airlineCompany;
     }
 
-    public List<Ticket> getTickets() {
-        return tickets;
+    public long getRouteId() {
+        return routeId;
     }
 
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setRouteId(long routeId) {
+        this.routeId = routeId;
     }
+
+    public long getAirlineCompanyId() {
+        return airlineCompanyId;
+    }
+
+    public void setAirlineCompanyId(long airlineCompanyId) {
+        this.airlineCompanyId = airlineCompanyId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -151,13 +160,12 @@ public class FlightDto {
                 Objects.equals(startingDate, flightDto.startingDate) &&
                 Objects.equals(endingDate, flightDto.endingDate) &&
                 Objects.equals(route, flightDto.route) &&
-                Objects.equals(airlineCompany, flightDto.airlineCompany) &&
-                Objects.equals(tickets, flightDto.tickets);
+                Objects.equals(airlineCompany, flightDto.airlineCompany);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, startingDate, endingDate, duration, numberOfSeats, numOfFullSeats, fullSeatsPer, route, airlineCompany, tickets);
+        return Objects.hash(id, name, startingDate, endingDate, duration, numberOfSeats, numOfFullSeats, fullSeatsPer, route, airlineCompany);
     }
 
     @Override
@@ -173,7 +181,6 @@ public class FlightDto {
                 ", fullSeatsPer=" + fullSeatsPer +
                 ", route=" + route +
                 ", airlineCompany=" + airlineCompany +
-                ", tickets=" + tickets +
                 '}';
     }
 }

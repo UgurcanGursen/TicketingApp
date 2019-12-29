@@ -1,27 +1,29 @@
 package com.ugurcangursen.ticketingapp.dto;
 
-import com.ugurcangursen.ticketingapp.entity.AirlineCompany;
+import io.swagger.annotations.ApiModelProperty;
 
-import java.util.Objects;
 
 public class PlaneDto {
 
+    @ApiModelProperty(required = true, value = "ID")
     private long id;
-
+    @ApiModelProperty(required = true, value = "Name Of Plane")
     private String name;
-
+    @ApiModelProperty(required = true, value = "Number Of Seats")
     private int numberOfSeats;
 
-    private AirlineCompany airlineCompany;
+    private AirlineCompanyDto airlineCompany;
+    private Long airlineCompanyId;
 
     public PlaneDto() {
     }
 
-    public PlaneDto(long id, String name, int numberOfSeats, AirlineCompany airlineCompany) {
+    public PlaneDto(long id, String name, int numberOfSeats, AirlineCompanyDto airlineCompany, Long airlineCompanyId) {
         this.id = id;
         this.name = name;
         this.numberOfSeats = numberOfSeats;
         this.airlineCompany = airlineCompany;
+        this.airlineCompanyId = airlineCompanyId;
     }
 
     public long getId() {
@@ -48,37 +50,19 @@ public class PlaneDto {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public AirlineCompany getAirlineCompany() {
+    public AirlineCompanyDto getAirlineCompany() {
         return airlineCompany;
     }
 
-    public void setAirlineCompany(AirlineCompany airlineCompany) {
+    public void setAirlineCompany(AirlineCompanyDto airlineCompany) {
         this.airlineCompany = airlineCompany;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PlaneDto planeDto = (PlaneDto) o;
-        return id == planeDto.id &&
-                numberOfSeats == planeDto.numberOfSeats &&
-                Objects.equals(name, planeDto.name) &&
-                Objects.equals(airlineCompany, planeDto.airlineCompany);
+    public Long getAirlineCompanyId() {
+        return airlineCompanyId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, numberOfSeats, airlineCompany);
-    }
-
-    @Override
-    public String toString() {
-        return "PlaneDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", numberOfSeats=" + numberOfSeats +
-                ", airlineCompany=" + airlineCompany +
-                '}';
+    public void setAirlineCompanyId(Long airlineCompanyId) {
+        this.airlineCompanyId = airlineCompanyId;
     }
 }

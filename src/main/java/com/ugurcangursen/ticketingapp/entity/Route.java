@@ -2,7 +2,6 @@ package com.ugurcangursen.ticketingapp.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +13,7 @@ public class Route implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
     @JoinColumn(name = "starting_airport_id")
@@ -25,9 +24,6 @@ public class Route implements Serializable {
     @ManyToOne
     private Airport endingAirport;
 
-    @JoinColumn(name = "flight_route_id")
-    @OneToMany
-    private List<Flight> flights;
 
     public Route() {
     }
@@ -64,13 +60,6 @@ public class Route implements Serializable {
         this.endingAirport = endingAirport;
     }
 
-    public List<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -80,13 +69,12 @@ public class Route implements Serializable {
         return Objects.equals(getId(), route.getId()) &&
                 Objects.equals(getName(), route.getName()) &&
                 Objects.equals(getStartingAirport(), route.getStartingAirport()) &&
-                Objects.equals(getEndingAirport(), route.getEndingAirport()) &&
-                Objects.equals(getFlights(), route.getFlights());
+                Objects.equals(getEndingAirport(), route.getEndingAirport());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getStartingAirport(), getEndingAirport(), getFlights());
+        return Objects.hash(getId(), getName(), getStartingAirport(), getEndingAirport());
     }
 
     @Override
@@ -96,7 +84,6 @@ public class Route implements Serializable {
                 ", name='" + name + '\'' +
                 ", startingAirport=" + startingAirport +
                 ", endingAirport=" + endingAirport +
-                ", flights=" + flights +
                 '}';
     }
 }

@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class AirlineCompanyServiceImpl implements AirlineCompanyService {
 
-    private  AirlineCompanyDAO airlineCompanyDAO;
     private final ModelMapper modelMapper;
+    private AirlineCompanyDAO airlineCompanyDAO;
 
     public AirlineCompanyServiceImpl(AirlineCompanyDAO airlineCompanyDAO, ModelMapper modelMapper) {
         this.airlineCompanyDAO = airlineCompanyDAO;
@@ -41,7 +41,7 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
     public AirlineCompanyDto update(long id, AirlineCompanyDto airlineCompany) {
         if (airlineCompany != null) {
             AirlineCompany airlineCompanyDb = modelMapper.map(airlineCompany, AirlineCompany.class);
-            AirlineCompany airlineCompanyDbSaved = airlineCompanyDAO.update(id,airlineCompanyDb);
+            AirlineCompany airlineCompanyDbSaved = airlineCompanyDAO.update(id, airlineCompanyDb);
             if (airlineCompanyDbSaved != null) {
                 return modelMapper.map(airlineCompanyDbSaved, AirlineCompanyDto.class);
             }
@@ -61,14 +61,14 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
     @Transactional
     public AirlineCompanyDto findById(long id) {
         AirlineCompany airlineCompanyDb = airlineCompanyDAO.findById(id);
-        return modelMapper.map(airlineCompanyDb,AirlineCompanyDto.class);
+        return modelMapper.map(airlineCompanyDb, AirlineCompanyDto.class);
     }
 
     @Override
     @Transactional
     public AirlineCompanyDto findByName(String name) {
         AirlineCompany airlineCompanyDb = airlineCompanyDAO.findByName(name);
-        return modelMapper.map(airlineCompanyDb,AirlineCompanyDto.class);
+        return modelMapper.map(airlineCompanyDb, AirlineCompanyDto.class);
     }
 
     @Override

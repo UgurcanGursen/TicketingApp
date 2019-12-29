@@ -1,32 +1,26 @@
 package com.ugurcangursen.ticketingapp.dto;
 
-import com.ugurcangursen.ticketingapp.entity.Route;
+import io.swagger.annotations.ApiModelProperty;
 
-
-import java.util.List;
 import java.util.Objects;
 
 public class AirportDto {
 
+    @ApiModelProperty(required = true, value = "ID")
     private long id;
-
+    @ApiModelProperty(required = true, value = "Name of Airport")
     private String name;
-
+    @ApiModelProperty(required = true, value = "Location Of Airport")
     private String location;
 
-    private List<Route> startingRoute;
-
-    private List<Route> endingRoute;
 
     public AirportDto() {
     }
 
-    public AirportDto(long id, String name, String location, List<Route> startingRoute, List<Route> endingRoute) {
+    public AirportDto(long id, String name, String location) {
         this.id = id;
         this.name = name;
         this.location = location;
-        this.startingRoute = startingRoute;
-        this.endingRoute = endingRoute;
     }
 
     public long getId() {
@@ -53,21 +47,6 @@ public class AirportDto {
         this.location = location;
     }
 
-    public List<Route> getStartingRoute() {
-        return startingRoute;
-    }
-
-    public void setStartingRoute(List<Route> startingRoute) {
-        this.startingRoute = startingRoute;
-    }
-
-    public List<Route> getEndingRoute() {
-        return endingRoute;
-    }
-
-    public void setEndingRoute(List<Route> endingRoute) {
-        this.endingRoute = endingRoute;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -76,14 +55,12 @@ public class AirportDto {
         AirportDto that = (AirportDto) o;
         return id == that.id &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(location, that.location) &&
-                Objects.equals(startingRoute, that.startingRoute) &&
-                Objects.equals(endingRoute, that.endingRoute);
+                Objects.equals(location, that.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, location, startingRoute, endingRoute);
+        return Objects.hash(id, name, location);
     }
 
     @Override
@@ -92,8 +69,6 @@ public class AirportDto {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
-                ", startingRoute=" + startingRoute +
-                ", endingRoute=" + endingRoute +
                 '}';
     }
 }

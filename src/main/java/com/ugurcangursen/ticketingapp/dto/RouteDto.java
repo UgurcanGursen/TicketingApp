@@ -1,33 +1,33 @@
 package com.ugurcangursen.ticketingapp.dto;
 
 import com.ugurcangursen.ticketingapp.entity.Airport;
-import com.ugurcangursen.ticketingapp.entity.Flight;
+import io.swagger.annotations.ApiModelProperty;
 
-import java.util.List;
-import java.util.Objects;
 
 public class RouteDto {
 
+    @ApiModelProperty(required = true, value = "ID")
     private long id;
-
+    @ApiModelProperty(required = true, value = "Name Of Route")
     private String name;
 
     private Airport startingAirport;
+    private long startingAirportId;
 
     private Airport endingAirport;
-
-    private List<Flight> flights;
+    private long endingAirportId;
 
 
     public RouteDto() {
     }
 
-    public RouteDto(long id, String name, Airport startingAirport, Airport endingAirport, List<Flight> flights) {
+    public RouteDto(long id, String name, Airport startingAirport, long startingAirportId, Airport endingAirport, long endingAirportId) {
         this.id = id;
         this.name = name;
         this.startingAirport = startingAirport;
+        this.startingAirportId = startingAirportId;
         this.endingAirport = endingAirport;
-        this.flights = flights;
+        this.endingAirportId = endingAirportId;
     }
 
     public long getId() {
@@ -54,6 +54,14 @@ public class RouteDto {
         this.startingAirport = startingAirport;
     }
 
+    public long getStartingAirportId() {
+        return startingAirportId;
+    }
+
+    public void setStartingAirportId(long startingAirportId) {
+        this.startingAirportId = startingAirportId;
+    }
+
     public Airport getEndingAirport() {
         return endingAirport;
     }
@@ -62,39 +70,11 @@ public class RouteDto {
         this.endingAirport = endingAirport;
     }
 
-    public List<Flight> getFlights() {
-        return flights;
+    public long getEndingAirportId() {
+        return endingAirportId;
     }
 
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RouteDto routeDto = (RouteDto) o;
-        return id == routeDto.id &&
-                Objects.equals(name, routeDto.name) &&
-                Objects.equals(startingAirport, routeDto.startingAirport) &&
-                Objects.equals(endingAirport, routeDto.endingAirport) &&
-                Objects.equals(flights, routeDto.flights);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, startingAirport, endingAirport, flights);
-    }
-
-    @Override
-    public String toString() {
-        return "RouteDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", startingAirport=" + startingAirport +
-                ", endingAirport=" + endingAirport +
-                ", flights=" + flights +
-                '}';
+    public void setEndingAirportId(long endingAirportId) {
+        this.endingAirportId = endingAirportId;
     }
 }

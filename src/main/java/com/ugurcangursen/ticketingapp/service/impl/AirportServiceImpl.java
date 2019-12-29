@@ -41,21 +41,21 @@ public class AirportServiceImpl implements AirportService {
     @Transactional
     public List<AirportDto> findAll() {
         List<Airport> data = airportDAO.findAll();
-        return Arrays.asList(modelMapper.map(data, AirportDto.class));
+        return Arrays.asList(modelMapper.map(data, AirportDto[].class));
     }
 
     @Override
     @Transactional
     public AirportDto findById(long id) {
         Airport airportDb = airportDAO.findById(id);
-        return modelMapper.map(airportDb,AirportDto.class);
+        return modelMapper.map(airportDb, AirportDto.class);
     }
 
     @Override
     @Transactional
     public AirportDto findByName(String name) {
         Airport airportDb = airportDAO.findByName(name);
-        return modelMapper.map(airportDb,AirportDto.class);
+        return modelMapper.map(airportDb, AirportDto.class);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AirportServiceImpl implements AirportService {
     public AirportDto update(long id, AirportDto airport) {
         if (airport != null) {
             Airport airportDb = modelMapper.map(airport, Airport.class);
-            Airport airportDbSaved = airportDAO.update(id,airportDb);
+            Airport airportDbSaved = airportDAO.update(id, airportDb);
             if (airportDbSaved != null) {
                 return modelMapper.map(airportDbSaved, AirportDto.class);
             }

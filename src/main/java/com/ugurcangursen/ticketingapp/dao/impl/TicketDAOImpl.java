@@ -47,7 +47,7 @@ public class TicketDAOImpl implements TicketDAO {
     public Ticket findById(long id) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Ticket ticket = currentSession.get(Ticket.class,id); // get the ticket
+        Ticket ticket = currentSession.get(Ticket.class, id); // get the ticket
 
         return ticket;
     }
@@ -56,7 +56,13 @@ public class TicketDAOImpl implements TicketDAO {
     public Ticket findByCode(String ticketCode) {
         Session currentSession = entityManager.unwrap(Session.class); // get the current hibernate session
 
-        Ticket ticket = currentSession.get(Ticket.class,ticketCode);
+        // create a query
+        Query theQuery =
+                currentSession.createQuery("select a from Ticket a where a.ticketCode =:ticketCode ", Ticket.class);
+        theQuery.setParameter("ticketCode", ticketCode);
+
+        // execute query and get result list
+        Ticket ticket = (Ticket) theQuery.list().get(0);
 
         return ticket;
     }
