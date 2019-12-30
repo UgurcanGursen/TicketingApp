@@ -31,13 +31,16 @@ public class Flight implements Serializable {
     private int duration;
 
     @Column(name = "number_of_seats")
-    private int numberOfSeats;
+    private float numberOfSeats;
 
     @Column(name = "full_seats")
-    private int numOfFullSeats;
+    private float numOfFullSeats;
 
     @Column(name = "full_seats_per")
-    private int fullSeatsPer;
+    private float fullSeatsPer;
+
+    @Column(name = "ticket_price")
+    private float ticketPrice;
 
     @JoinColumn(name = "flight_route_id")
     @ManyToOne
@@ -92,27 +95,27 @@ public class Flight implements Serializable {
         this.duration = duration;
     }
 
-    public int getNumberOfSeats() {
+    public float getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(float numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public int getNumOfFullSeats() {
+    public float getNumOfFullSeats() {
         return numOfFullSeats;
     }
 
-    public void setNumOfFullSeats(int numOfFullSeats) {
+    public void setNumOfFullSeats(float numOfFullSeats) {
         this.numOfFullSeats = numOfFullSeats;
     }
 
-    public int getFullSeatsPer() {
+    public float getFullSeatsPer() {
         return fullSeatsPer;
     }
 
-    public void setFullSeatsPer(int fullSeatsPer) {
+    public void setFullSeatsPer(float fullSeatsPer) {
         this.fullSeatsPer = fullSeatsPer;
     }
 
@@ -132,17 +135,25 @@ public class Flight implements Serializable {
         this.airlineCompany = airlineCompany;
     }
 
+    public float getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(float ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Flight)) return false;
         Flight flight = (Flight) o;
-        return getDuration() == flight.getDuration() &&
-                getNumberOfSeats() == flight.getNumberOfSeats() &&
-                getNumOfFullSeats() == flight.getNumOfFullSeats() &&
-                getFullSeatsPer() == flight.getFullSeatsPer() &&
-                Objects.equals(getId(), flight.getId()) &&
+        return getId() == flight.getId() &&
+                getDuration() == flight.getDuration() &&
+                Float.compare(flight.getNumberOfSeats(), getNumberOfSeats()) == 0 &&
+                Float.compare(flight.getNumOfFullSeats(), getNumOfFullSeats()) == 0 &&
+                Float.compare(flight.getFullSeatsPer(), getFullSeatsPer()) == 0 &&
+                Float.compare(flight.getTicketPrice(), getTicketPrice()) == 0 &&
                 Objects.equals(getName(), flight.getName()) &&
                 Objects.equals(getStartingDate(), flight.getStartingDate()) &&
                 Objects.equals(getEndingDate(), flight.getEndingDate()) &&
@@ -152,7 +163,7 @@ public class Flight implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getStartingDate(), getEndingDate(), getDuration(), getNumberOfSeats(), getNumOfFullSeats(), getFullSeatsPer(), getRoute(), getAirlineCompany());
+        return Objects.hash(getId(), getName(), getStartingDate(), getEndingDate(), getDuration(), getNumberOfSeats(), getNumOfFullSeats(), getFullSeatsPer(), getTicketPrice(), getRoute(), getAirlineCompany());
     }
 
     @Override
@@ -166,6 +177,7 @@ public class Flight implements Serializable {
                 ", numberOfSeats=" + numberOfSeats +
                 ", numOfFullSeats=" + numOfFullSeats +
                 ", fullSeatsPer=" + fullSeatsPer +
+                ", ticketPrice=" + ticketPrice +
                 ", route=" + route +
                 ", airlineCompany=" + airlineCompany +
                 '}';

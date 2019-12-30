@@ -24,9 +24,6 @@ public class Ticket implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Flight flight;
 
-    @Column(name = "ticket_price")
-    private int ticketPrice;
-
     @Column(name = "is_ticket_sold")
     private boolean isTicketSold;
 
@@ -57,14 +54,6 @@ public class Ticket implements Serializable {
         this.flight = flight;
     }
 
-    public int getTicketPrice() {
-        return ticketPrice;
-    }
-
-    public void setTicketPrice(int ticketPrice) {
-        this.ticketPrice = ticketPrice;
-    }
-
 
     public boolean isTicketSold() {
         return isTicketSold;
@@ -77,18 +66,17 @@ public class Ticket implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ticket ticket1 = (Ticket) o;
-        return id == ticket1.id &&
-                ticketPrice == ticket1.ticketPrice &&
-                isTicketSold == ticket1.isTicketSold &&
-                Objects.equals(ticketCode, ticket1.ticketCode) &&
-                Objects.equals(flight, ticket1.flight);
+        if (!(o instanceof Ticket)) return false;
+        Ticket ticket = (Ticket) o;
+        return getId() == ticket.getId() &&
+                isTicketSold() == ticket.isTicketSold() &&
+                Objects.equals(getTicketCode(), ticket.getTicketCode()) &&
+                Objects.equals(getFlight(), ticket.getFlight());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ticketCode, flight, ticketPrice, isTicketSold);
+        return Objects.hash(getId(), getTicketCode(), getFlight(), isTicketSold());
     }
 
     @Override
@@ -97,7 +85,6 @@ public class Ticket implements Serializable {
                 "id=" + id +
                 ", ticketCode='" + ticketCode + '\'' +
                 ", flight=" + flight +
-                ", ticketPrice=" + ticketPrice +
                 ", isTicketSold=" + isTicketSold +
                 '}';
     }

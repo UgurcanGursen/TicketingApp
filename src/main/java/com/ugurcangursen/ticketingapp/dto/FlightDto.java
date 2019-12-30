@@ -20,11 +20,13 @@ public class FlightDto {
     @ApiModelProperty(required = true, value = "Flight Duration")
     private int duration;
     @ApiModelProperty(required = true, value = "Number Of Seats")
-    private int numberOfSeats;
+    private float numberOfSeats;
     @ApiModelProperty(required = true, value = "Number Of Seats Sold")
-    private int numOfFullSeats;
+    private float numOfFullSeats;
     @ApiModelProperty(required = true, value = "Seats Sold Percentage")
-    private int fullSeatsPer;
+    private float fullSeatsPer;
+    @ApiModelProperty(required = true, value = "Ticket Price")
+    private float ticketPrice;
 
     private Route route;
     private long routeId;
@@ -36,7 +38,7 @@ public class FlightDto {
     public FlightDto() {
     }
 
-    public FlightDto(long id, String name, Date startingDate, Date endingDate, int duration, int numberOfSeats, int numOfFullSeats, int fullSeatsPer, Route route, AirlineCompany airlineCompany) {
+    public FlightDto(long id, String name, Date startingDate, Date endingDate, int duration, float numberOfSeats, float numOfFullSeats, float fullSeatsPer, float ticketPrice, Route route, long routeId, AirlineCompany airlineCompany, long airlineCompanyId) {
         this.id = id;
         this.name = name;
         this.startingDate = startingDate;
@@ -45,8 +47,11 @@ public class FlightDto {
         this.numberOfSeats = numberOfSeats;
         this.numOfFullSeats = numOfFullSeats;
         this.fullSeatsPer = fullSeatsPer;
+        this.ticketPrice = ticketPrice;
         this.route = route;
+        this.routeId = routeId;
         this.airlineCompany = airlineCompany;
+        this.airlineCompanyId = airlineCompanyId;
     }
 
     public long getId() {
@@ -89,27 +94,27 @@ public class FlightDto {
         this.duration = duration;
     }
 
-    public int getNumberOfSeats() {
+    public float getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setNumberOfSeats(int numberOfSeats) {
+    public void setNumberOfSeats(float numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public int getNumOfFullSeats() {
+    public float getNumOfFullSeats() {
         return numOfFullSeats;
     }
 
-    public void setNumOfFullSeats(int numOfFullSeats) {
+    public void setNumOfFullSeats(float numOfFullSeats) {
         this.numOfFullSeats = numOfFullSeats;
     }
 
-    public int getFullSeatsPer() {
+    public float getFullSeatsPer() {
         return fullSeatsPer;
     }
 
-    public void setFullSeatsPer(int fullSeatsPer) {
+    public void setFullSeatsPer(float fullSeatsPer) {
         this.fullSeatsPer = fullSeatsPer;
     }
 
@@ -145,6 +150,13 @@ public class FlightDto {
         this.airlineCompanyId = airlineCompanyId;
     }
 
+    public float getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(float ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
 
     @Override
     public boolean equals(Object o) {

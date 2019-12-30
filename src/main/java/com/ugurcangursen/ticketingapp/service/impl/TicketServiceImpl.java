@@ -34,8 +34,31 @@ public class TicketServiceImpl implements TicketService {
     public TicketDto save(TicketDto ticket) {
         if (ticket != null) {
             Ticket ticketDb = modelMapper.map(ticket, Ticket.class);
-            Flight flight = flightDAO.findById(ticket.getFlightId());
-            ticketDb.setFlight(flight);
+
+            if (ticketDb.isTicketSold()) {
+                // Get quota status of Flight
+                Flight flight = flightDAO.findById(ticket.getFlightId());
+                ticketDb.setFlight(flight);
+                float quota = flight.getNumberOfSeats();
+                float fullQuota = flight.getNumOfFullSeats();
+
+                if (fullQuota < quota) {
+                    // Increase quota if it is not full yet
+                    flight.setNumOfFullSeats(fullQuota + 1);
+
+                    float newPer = ((1+fullQuota)*100)/quota;
+                    float currentPer = flight.getFullSeatsPer();
+                    float diffPer = newPer - currentPer;
+                    float newPrice;
+                    if (diffPer > 9) {
+                        flight.setFullSeatsPer(newPer);
+                        newPrice = flight.getTicketPrice() + flight.getTicketPrice() * diffPer/100;
+                        ticketDb.getFlight().setTicketPrice(newPrice);
+                    }
+                }
+            }
+
+
             Ticket ticketDbSaved = ticketDAO.save(ticketDb);
             if (ticketDbSaved != null) {
                 return modelMapper.map(ticketDbSaved, TicketDto.class);
@@ -74,7 +97,6 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public TicketDto update(long id, TicketDto ticket) {
-
         if (ticket != null) {
             Ticket ticketDb = modelMapper.map(ticket, Ticket.class);
 
@@ -82,31 +104,31 @@ public class TicketServiceImpl implements TicketService {
                 // Get quota status of Flight
                 Flight flight = flightDAO.findById(ticket.getFlightId());
                 ticketDb.setFlight(flight);
-                int quota = flight.getNumberOfSeats();
-                int fullQuota = flight.getNumOfFullSeats();
+                float quota = flight.getNumberOfSeats();
+                float fullQuota = flight.getNumOfFullSeats();
 
                 if (fullQuota < quota) {
                     // Increase quota if it is not full yet
                     flight.setNumOfFullSeats(fullQuota + 1);
 
-                    int newPer = (fullQuota / quota) * 100;
-                    int currentPer = flight.getFullSeatsPer();
-                    int diffPer = (newPer % 10) - currentPer;
-                    if (diffPer > 0) {
-                        flight.setFullSeatsPer(newPer % 10);
-                        int newPrice = ticketDb.getTicketPrice() + ticketDb.getTicketPrice() * (diffPer / 100);
-                        ticketDb.setTicketPrice(newPrice);
+                    float newPer = ((1+fullQuota)*100)/quota;
+                    float currentPer = flight.getFullSeatsPer();
+                    float diffPer = newPer - currentPer;
+                    float newPrice;
+                    if (diffPer > 9) {
+                        flight.setFullSeatsPer(newPer);
+                        newPrice = flight.getTicketPrice() + flight.getTicketPrice() * diffPer/100;
+                        ticketDb.getFlight().setTicketPrice(newPrice);
                     }
                 }
             }
 
 
-            Ticket ticketDbSaved = ticketDAO.update(id, ticketDb);
+            Ticket ticketDbSaved = ticketDAO.update(id,ticketDb);
             if (ticketDbSaved != null) {
                 return modelMapper.map(ticketDbSaved, TicketDto.class);
             }
         }
-
         return ticket;
     }
 }

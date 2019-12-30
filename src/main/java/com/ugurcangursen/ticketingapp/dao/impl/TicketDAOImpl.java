@@ -84,10 +84,10 @@ public class TicketDAOImpl implements TicketDAO {
     @Override
     public Ticket update(long id, Ticket ticket) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query theQuery = currentSession.createQuery("update Ticket  set ticketCode =: ticketCode,ticketPrice =: ticketPrice,isTicketSold =: isTicketSold where id =:id");
+        Query theQuery = currentSession.createQuery("update Ticket  set ticketCode =: ticketCode,isTicketSold =: isTicketSold where id =:id");
         theQuery.setParameter("id", id);
         theQuery.setParameter("ticketCode", ticket.getTicketCode());
-        theQuery.setParameter("ticketPrice", ticket.getTicketPrice());
+//        theQuery.setParameter("ticketPrice", ticket.getTicketPrice());
         theQuery.setParameter("isTicketSold", ticket.isTicketSold());
         theQuery.executeUpdate();
         return ticket;
